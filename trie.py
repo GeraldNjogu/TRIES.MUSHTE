@@ -3,12 +3,12 @@ from tkinter import messagebox
 
 # Backend: Trie with deletion
 class TrieNode:
-    def _init_(self):
+    def __init__(self):
         self.children = {}
         self.is_end_of_word = False
 
 class Trie:
-    def _init_(self):
+    def __init__(self):
         self.root = TrieNode()
 
     def insert(self, word):
@@ -67,31 +67,32 @@ class Trie:
 
 
 class AutocompleteApp:
-    def _init_(self, root, trie):
+    def __init__(self, root, trie):
         self.trie = trie
         self.root = root
         self.root.title("Autocomplete System")
 
+        # Input label and field
         self.input_label = tk.Label(root, text="Enter Word/Prefix:")
         self.input_label.pack()
         self.input_field = tk.Entry(root, width=30)
         self.input_field.pack()
         self.input_field.bind("<KeyRelease>", self.update_suggestions)
 
-        
-        
+        # Suggestions display
         self.suggestions_label = tk.Label(root, text="Suggestions:")
         self.suggestions_label.pack()
         self.suggestions_listbox = tk.Listbox(root, width=30, height=10)
         self.suggestions_listbox.pack()
 
-        # Buttons
+        # Buttons to add or delete words
         self.add_word_button = tk.Button(root, text="Add Word", command=self.add_word)
         self.add_word_button.pack()
         self.delete_word_button = tk.Button(root, text="Delete Word", command=self.delete_word)
         self.delete_word_button.pack()
 
     def update_suggestions(self, event=None):
+        # Fetch and display suggestions based on entered prefix
         prefix = self.input_field.get()
         suggestions = self.trie.starts_with(prefix)
         self.suggestions_listbox.delete(0, tk.END)  # Clear previous suggestions
@@ -123,7 +124,7 @@ class AutocompleteApp:
 
 
 # Main Application
-if _name_ == "_main_":
+if __name__ == "__main__":
     root = tk.Tk()
     trie = Trie()
 
@@ -134,3 +135,4 @@ if _name_ == "_main_":
 
     app = AutocompleteApp(root, trie)
     root.mainloop()
+
